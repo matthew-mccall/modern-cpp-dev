@@ -1,0 +1,2 @@
+#!/bin/sh
+cmake . -B build -D CMAKE_CXX_COMPILER=clang++-mp-19 -DCMAKE_CXX_COMPILER_CLANG_SCAN_DEPS=/opt/local/bin/clang-scan-deps-mp-19 -G Ninja
