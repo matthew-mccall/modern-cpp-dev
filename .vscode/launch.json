@@ -6,6 +6,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/01-smart-ptrs/01SmartPtrs",
+            "cwd": "${workspaceFolder}",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -24,6 +25,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/02-modern-std/02ModernStd",
+            "cwd": "${workspaceFolder}",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -42,6 +44,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/03-concepts/03Concepts",
+            "cwd": "${workspaceFolder}",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -60,6 +63,45 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/build/04-modern-lang/04ModernLang",
+            "cwd": "${workspaceFolder}",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "05-ranges-views",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/05-ranges-views/05RangesViews",
+            "cwd": "${workspaceFolder}",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "06-cpp-modules",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/06-cpp-modules/06CppModules",
+            "cwd": "${workspaceFolder}",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",

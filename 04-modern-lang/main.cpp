@@ -5,7 +5,29 @@
 #include <tuple>
 #include <type_traits>
 #include <utility>
+#include <variant>
 #include <vector>
+
+// Fold expression syntax quick reference:
+// 1) (... op pack)        -> unary left fold
+// 2) (pack op ...)        -> unary right fold
+// 3) (init op ... op pack)-> binary left fold
+// 4) (pack op ... op init)-> binary right fold
+// Example: (... + values) folds a parameter pack with '+' from left to right.
+
+// 'typename... Handlers' declares a template parameter pack (zero or more types).
+template <typename... Handlers>
+struct Overload : Handlers... {
+    // This is pack expansion, not a fold expression.
+    // It expands to one using-declaration per handler type:
+    // using H1::operator(); using H2::operator(); ...
+    using Handlers::operator()...;
+};
+
+template <typename... Handlers>
+// 'Handlers...' here is a function-parameter pack in the deduction guide.
+// This allows Overload{lambda1, lambda2, ...} to deduce Overload<Lambda1, Lambda2, ...>.
+Overload(Handlers...) -> Overload<Handlers...>;
 
 auto addTrailing(int left, int right) -> int
 {
@@ -67,6 +89,33 @@ int main()
     constexpr unsigned mask = buildMask(5);
     static_assert(mask == 31U);
     std::println("buildMask(5): {}", mask);
+    std::println("");
+
+    std::println("--- variant visit with overloaded constrained auto ---");
+    const std::vector<std::variant<int, double, std::string, bool>> values {
+        42,
+        3.5,
+        std::string("hello variant"),
+        true,
+    };
+
+    // Pack expansion happens when constructing Overload with multiple lambdas:
+    // each lambda becomes one element in the Handlers... pack.
+    const auto visitor = Overload {
+        [](std::floating_point auto value) {
+            std::println("one-case handler (floating point): {}", value);
+        },
+        [](std::integral auto value) {
+            std::println("multi-case handler (integral): {}", value);
+        },
+        [](const std::string& value) {
+            std::println("one-case handler (string): {}", value);
+        },
+    };
+
+    for (const auto& value : values) {
+        std::visit(visitor, value);
+    }
 
     return 0;
 }
